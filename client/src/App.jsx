@@ -1,9 +1,61 @@
+import {RouterProvider,createBrowserRouter}  from "react-router-dom";
+import { HomeLayout,Error, Landing, Login, Register,VerifyEmail,ResetPassword } from "./pages";
+import { ErrorElement } from "./components";
+
+//loaders
+import { loader as verifyEmailLoader } from "./pages/VerifyEmail";
+import { loader as resetPasswordLoader } from "./pages/ResetPassword";
+
+//actions
+import {action as loginAction} from "./pages/Login";
+import {action as registerAction} from "./pages/Register";
+import { action as resetPasswordAction } from "./pages/ResetPassword";
+
+const router = createBrowserRouter([
+  {
+    path:'/',
+    element:<HomeLayout/>,
+    errorElement:<Error/>,
+    children:[
+      {
+        index:true,
+        element:<Landing/>,
+        errorElement: <ErrorElement/>
+      }
+    ]
+  },
+  {
+    path:'/login',
+    element:<Login/>,
+    errorElement:<Error/>,
+    action:loginAction,
+  },
+  {
+    path:'register',
+    element:<Register/>,
+    errorElement:<Error/>,
+    action:registerAction,
+  },
+  {
+    path:'/reset-password',
+    element:<ResetPassword/>,
+    errorElement:<Error/>,
+    loader:resetPasswordLoader,
+    action:resetPasswordAction,
+  },
+  {
+    path:'verify-email',
+    element:<VerifyEmail/>,
+    errorElement:<Error/>,
+    loader:verifyEmailLoader,
+  }
+]);
 
 function App() {
   return(
-    <h1 className="h-screen text-7xl flex justify-center items-center font-bold underline">
-      Lost and found
-    </h1>
+    <>
+      <RouterProvider router={router}/>
+    </>
   )
 }
 
