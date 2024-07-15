@@ -5,14 +5,16 @@ import { MdEmail } from "react-icons/md";
 import { FaKey,FaGoogle } from "react-icons/fa";
 import {customFetch} from "../utils";
 import {toast} from "react-toastify";
+import { loginUser } from '../features/userSlice';
 
-export const action = async({request})=>{
+export const action = (store)=>async({request})=>{
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
   const {email,password} = data;
   try {
     const response = await customFetch.post('/auth/login',{email,password});
-    console.log(response.data.user);
+    // console.log(response.data.user);
+    store.dispatch(loginUser(response.data));
     toast.success("User Successfully Logged In");
     return redirect('/');
   } catch (error) {
@@ -39,6 +41,10 @@ const Login = () => {
       const errorMessage = error?.response?.data?.msg || 'An error occurred';
       toast.error(errorMessage);
     }
+  }
+
+  const handleGoogleSignIn = ()=>{
+    window.location.href= 'http://localhost:5000/api/v1/auth/google';//**CORRECT IT LATER */
   }
 
   return (
@@ -76,7 +82,7 @@ const Login = () => {
 
           </div>
           <SubmitBtn text="Login"/>
-          <button type="submit" className='btn btn-neutral btn-block mt-2'>
+          <button type="button" className='btn btn-neutral btn-block mt-2' onClick={handleGoogleSignIn}>
             <FaGoogle/>
             Sign in With Google
           </button>

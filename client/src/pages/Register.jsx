@@ -24,6 +24,11 @@ export const action = async({request})=>{
 
 
 const Register = () => {
+
+  const handleGoogleSignIn = ()=>{
+    window.location.href= 'http://localhost:5000/api/v1/auth/google';//**CORRECT IT LATER */
+  }
+
   return (
     <section className="h-screen grid place-items-center">
       <Form className="card bg-base-300 w-96 shadow-xl hover:shadow-2xl duration-300" method='post'>
@@ -37,7 +42,7 @@ const Register = () => {
           <div className="card-actions justify-end self-end mt-[-0.5rem]">
           </div>
           <SubmitBtn text="Register"/>
-          <button type="submit" className='btn btn-neutral btn-block mt-2'>
+          <button type="button" className='btn btn-neutral btn-block mt-2' onClick={handleGoogleSignIn}>
             <FaGoogle/>
             Sign in With Google
           </button>

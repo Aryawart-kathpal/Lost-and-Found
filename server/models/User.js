@@ -50,6 +50,11 @@ userSchema.pre('save',async function(){
     this.password = await bcrypt.hash(this.password,salt);
 });
 
+userSchema.pre('remove',async function (){
+    console.log("Delete user"); 
+    // delete all associated items, or may also think about the inbox messages in future
+})
+
 userSchema.methods.comparePassword = async function (candidatePassword) {
     const isMatch = await bcrypt.compare(candidatePassword,this.password);
     return isMatch;
