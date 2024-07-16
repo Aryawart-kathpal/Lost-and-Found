@@ -39,8 +39,9 @@ const Register = () => {
           <FormInput name="name" type="text" label="Name" Icon={FaUser}/>
           <FormInput name="email" type="email" label="Email" Icon={MdEmail}/>
           <FormInput name="password" type="password" label="Password" Icon={FaKey}/>
-          <div className="card-actions justify-end self-end mt-[-0.5rem]">
-          </div>
+
+          <Link to='/login' className="text-primary hover:underline flex justify-end w-full pr-2 mt-[-0.3rem] font-medium" >Login</Link>
+
           <SubmitBtn text="Register"/>
           <button type="button" className='btn btn-neutral btn-block mt-2' onClick={handleGoogleSignIn}>
             <FaGoogle/>

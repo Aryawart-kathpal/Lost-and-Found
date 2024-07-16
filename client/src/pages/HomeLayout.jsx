@@ -1,11 +1,13 @@
+import { useSelector } from "react-redux";
 import { Navbar } from "../components"
-import {Loading} from "../components"
+import {Loading,Footer} from "../components"
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom"
 
 const HomeLayout = () => {
   const navigate = useNavigate();
   const isLoading = navigate.state === 'loading';
   const location = useLocation();
+  const user = useSelector((state)=>state.userState.user);
   return (
     <>
       <Navbar/>
@@ -22,7 +24,7 @@ const HomeLayout = () => {
                 <Link to="/items">Find Listings</Link>
               </button>
               <button className="btn btn-outline btn-sm btn-neutral md:text-[1rem]">
-                <Link to="/items">Get Started</Link>
+                <Link to={user?'/profile':'/login'}>Get Started</Link>
               </button>
             </div>
           </div>
@@ -32,6 +34,7 @@ const HomeLayout = () => {
         <section className="align-element py-20">
           <Outlet/>
         </section>}
+      <Footer/>  
     </>
   )
 }

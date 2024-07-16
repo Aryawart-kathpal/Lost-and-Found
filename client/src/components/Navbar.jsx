@@ -9,6 +9,7 @@ import { toggleTheme } from "../features/userSlice";
 const Navbar = () => {
 
   const dispatch = useDispatch();
+  const user = useSelector((state)=>state.userState.user);
 
   const handleThemeChange = ()=>{
     dispatch(toggleTheme());
@@ -39,7 +40,9 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-end">
-        <Link to='/profile' className="btn btn-ghost capitalize text-[1.1rem] ">Profile</Link>
+        {user?<Link to='/profile' className="btn btn-ghost capitalize text-[1.1rem] sm:flex hidden">Profile</Link>:
+        <Link to='/login' className="btn btn-ghost capitalize text-[1.1rem] sm:flex hidden">Log In</Link>
+        }
 
         <label className="swap swap-rotate ml-3">
           <input type="checkbox" onChange={handleThemeChange}/>

@@ -9,7 +9,7 @@ const {categories,locations} = require('../utils');
 //send categories also -> may be in dashboard too
 //title, description, category, location, status, type, date, images, thumbnail, contact, user
 const getAllItems = async(req,res)=>{
-    const {search,category,location,order,type} = req.query;
+    const {search,category,location,order,type,featured} = req.query;
 
     let queryObject = {};
     if(search){
@@ -23,6 +23,9 @@ const getAllItems = async(req,res)=>{
     }
     if(type){
         queryObject.type=type;
+    }
+    if(featured){
+        queryObject.featured=true;
     }
 
     const itemCount = await Item.find(queryObject).countDocuments();
@@ -82,26 +85,34 @@ const createItem = async(req,res)=>{
 
 const updateItem = async(req,res)=>{
     const {id} = req.params;
-    const {title,description,category,location,type,thumbnail,contact,status,image} = req.body;
+    const {title,description,category,location,type,thumbnail,contact,status,image,featured} = req.body;
 
-    const item = await Item.findOneAndUpdate({_id:id,user:req.user.userId},{title,description,category,location,type,thumbnail,contact,status},{new:true,runValidators:true});
+    const user = await User.findOne({_id:req.user.userId});
+    checkPermissions(req.user,user._id);
+
+    const item = await Item.findOneAndUpdate({_id:id},{title,description,category,location,type,thumbnail,contact,status,featured},{new:true,runValidators:true});
 
     if(!item){
         throw new CustomError.NotFoundError(`Can't update this item`);
     }
 
     // images ka scene
-    if(item.images.length === 5){
-        throw new CustomError.BadRequestError(`Cannot upload more than 5 images`);
+    if(image){
+        if(item.images.length === 5){
+            throw new CustomError.BadRequestError(`Cannot upload more than 5 images`);
+        }
+        item.images=[...item.images,image];
+        await item.save();
     }
-    item.images=[...item.images,image];
-    await item.save();
 
     res.status(StatusCodes.OK).json({item,msg:"Item updated successfully"});
 }
 
 const deleteItem = async(req,res)=>{
     const {id} = req.params;
+    const user = await User.findOne({_id:req.user.userId});
+
+    checkPermissions(req.user,user._id);
 
     const item = await Item.findOneAndDelete({_id:id,user:req.user.userId});
     if(!item){

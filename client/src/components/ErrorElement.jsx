@@ -1,6 +1,6 @@
 const ErrorElement = () => {
   return (
-    <div>ErrorElement</div>
+    <div className="text-2xl text-center">There was Some error...</div>
   )
 }
 export default ErrorElement

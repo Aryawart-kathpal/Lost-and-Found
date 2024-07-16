@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Form, redirect,useNavigation } from "react-router-dom";
+import { Form, redirect,useNavigation,Link } from "react-router-dom";
 import { FormInput,SubmitBtn } from '../components';  // Make sure the path is correct
 import { MdEmail } from "react-icons/md";
 import { FaKey,FaGoogle } from "react-icons/fa";
@@ -56,10 +56,10 @@ const Login = () => {
           </h2>
           <FormInput name="email" type="email" label="Email" Icon={MdEmail}/>
           <FormInput name="password" type="password" label="Password" Icon={FaKey}/>
-          <div className="justify-end self-end mt-[-0.5rem]">
+          <div className="w-full flex justify-between mt-[-0.3rem]">
             {/* Forgot password modal */}
-
-            <button className='text-primary hover:text-secondary' onClick={()=>document.getElementById('modal').showModal()} type='button'>Forgot password</button>
+            <Link to='/register' className="text-primary hover:underline pl-2 font-medium" >Sign Up</Link>
+            <button className='text-primary hover:underline pr-2 font-medium' onClick={()=>document.getElementById('modal').showModal()} type='button'>Forgot password</button>
 
             <dialog id="modal" className='modal'>
               <div className="modal-box">
