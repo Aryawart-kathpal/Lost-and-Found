@@ -10,6 +10,14 @@ require('./controllers/passport');
 
 // other packages
 const morgan = require('morgan');
+const fileUpload = require('express-fileupload');
+
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET,  
+});
 
 //db
 const connectDB = require('./db/connect');
@@ -26,6 +34,7 @@ const notFoundMiddleware = require('./middleware/not-found');
 //routes
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
+const itemsRoutes = require('./routes/itemsRoutes');
 
 // using middlewares
 app.use(cors({
@@ -45,11 +54,13 @@ app.use(morgan('tiny'));
 app.use(session({secret:process.env.JWT_SECRET,resave:false,saveUninitialized:false}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(fileUpload({useTempFiles:true}));
 
 //using all other routes
 
 app.use('/api/v1/auth',authRoutes);
 app.use('/api/v1/users',userRoutes);
+app.use('/api/v1/items',itemsRoutes);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

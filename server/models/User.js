@@ -41,6 +41,12 @@ const userSchema = new mongoose.Schema({
     passwordTokenExpirationDate:{
         type:Date,
     },
+    items:{
+        type:[{
+            type:mongoose.Schema.ObjectId,
+            ref:'Item',
+        }],
+    },
 },{timestamps:true});
 
 userSchema.pre('save',async function(){
@@ -51,8 +57,7 @@ userSchema.pre('save',async function(){
 });
 
 userSchema.pre('remove',async function (){
-    console.log("Delete user"); 
-    // delete all associated items, or may also think about the inbox messages in future
+    await this.model('Item').deleteMany({user:this._id});
 })
 
 userSchema.methods.comparePassword = async function (candidatePassword) {
