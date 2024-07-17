@@ -2,12 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
 const themes = {
-    forest : "forest",
+    sunset : "sunset",
     cupcake : "cupcake",
 }
 
 const getThemeFromLocalStorage = () =>{
-    const theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? themes.forest : themes.cupcake;
+    let existingTheme = localStorage.getItem("theme");
+    
+    if(existingTheme){
+        document.documentElement.setAttribute("data-theme", existingTheme);
+        return existingTheme;
+    }
+    const theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? themes.sunset : themes.cupcake;
+    document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme",theme);
     return theme;
 }
@@ -36,7 +43,7 @@ const userSlice = createSlice({
             toast.success("Logged out successfully");
         },
         toggleTheme:(state)=>{
-            const theme = state.theme === themes.forest ? themes.cupcake : themes.forest;
+            const theme = state.theme === themes.sunset ? themes.cupcake : themes.sunset;
             document.documentElement.setAttribute("data-theme", theme);
             state.theme = theme;
             localStorage.setItem("theme",theme);

@@ -10,6 +10,5 @@ export default {
   plugins: [require('@tailwindcss/typography'), require('daisyui')],
   daisyui:{
     themes:["sunset","cupcake"]
-  },
-  darkMode:['class','[data-theme="halloween"]']
+  }
 }

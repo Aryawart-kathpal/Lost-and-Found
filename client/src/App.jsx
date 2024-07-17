@@ -1,11 +1,13 @@
 import {RouterProvider,createBrowserRouter}  from "react-router-dom";
-import { HomeLayout,Error, Landing, Login, Register,VerifyEmail,ResetPassword,About,Items,Contact, Profile } from "./pages";
+import { HomeLayout,Error, Landing, Login, Register,VerifyEmail,ResetPassword,About,Items,Contact, Profile, SingleItem } from "./pages";
 import { ErrorElement } from "./components";
 
 //loaders
 import { loader as verifyEmailLoader } from "./pages/VerifyEmail";
 import { loader as resetPasswordLoader } from "./pages/ResetPassword";
 import {loader as landingLoader} from "./pages/Landing";
+import { loader as singleItemLoader } from "./pages/SingleItem";
+import { loader as itemsLoader } from "./pages/Items";
 
 //actions
 import {action as loginAction} from "./pages/Login";
@@ -35,6 +37,7 @@ const router = createBrowserRouter([
         path:'/items',
         element:<Items/>,
         errorElement:<ErrorElement/>,
+        loader:itemsLoader,
       },
       {
         path:'/contact',
@@ -45,6 +48,12 @@ const router = createBrowserRouter([
         path : '/profile',
         element : <Profile/>,
         errorElement:<ErrorElement/>,
+      },
+      {
+        path:'/items/:id',
+        element:<SingleItem/>,
+        loader:singleItemLoader,
+        errorElement:<ErrorElement/>
       }
     ]
   },

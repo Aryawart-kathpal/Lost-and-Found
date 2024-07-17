@@ -23,7 +23,7 @@ const UserTestimonials = () => {
         <SectionTitle text='User Testimonials'/>
         <div className="mt-8 grid gap-4 lg:grid-cols-2 place-items-center">
             {data.map((item)=>{
-                return <TestimonialCard id={item.id} item={item} />
+                return <TestimonialCard key={item.id} item={item} />
             })}
         </div>
     </div>

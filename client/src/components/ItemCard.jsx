@@ -7,8 +7,10 @@ const ItemCard = ({ item }) => {
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
     return new Date(dateString).toLocaleDateString('en-US', options);
   };
+  const link = `/items/${item._id}`;
   return (
-    <div className="card card-compact bg-base-300 duration-300 w-72 h-[27rem] hover:shadow-xl flex flex-col">
+    <Link to={link} >
+      <div className="card card-compact bg-base-300 duration-300 w-72 h-[27rem] hover:shadow-xl flex flex-col">
       <figure>
         <img src={thumbnail} className="object-cover h-48
          w-full" alt={title} />
@@ -28,6 +30,7 @@ const ItemCard = ({ item }) => {
           </Link>
       </div>
     </div>
+    </Link>
   );
 };
 

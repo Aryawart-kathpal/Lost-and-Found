@@ -9,3 +9,4 @@ export {default as Error} from "./Error";
 export {default as Landing} from "./Landing";
 export {default as VerifyEmail} from "./VerifyEmail";
 export {default as ResetPassword} from "./ResetPassword";
+export {default as SingleItem} from "./SingleItem";

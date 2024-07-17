@@ -9,3 +9,5 @@ export {default as SectionTitle} from "./SectionTitle";
 export {default as ItemCard} from "./ItemCard";
 export {default as UserTestimonials} from "./UserTestimonials";
 export {default as Footer} from "./Footer";
+export {default as Filters} from "./Filters";
+export {default as PaginationContainer} from "./PaginationContainer";

@@ -55,7 +55,7 @@ const getAllItems = async(req,res)=>{
         page:parseInt(page),pageSize:limit,pageCount:Math.ceil(itemCount/limit),total:itemCount
     }
 
-    res.status(StatusCodes.OK).json({items,pagination,categories,locations});
+    res.status(StatusCodes.OK).json({items,pagination,categories:[...categories,'all'],locations : [...locations,'all']});
 }
 
 
