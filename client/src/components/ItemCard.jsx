@@ -20,7 +20,7 @@ const ItemCard = ({ item }) => {
             <h2 className="card-title w-full">
               {title}
             </h2>
-            <div className="badge badge-secondary uppercase">{type}</div>
+            <div className="badge badge-secondary uppercase font-medium">{type}</div>
           </div>
           <p className="text-sm text-base mb-3">{description}</p>
           <p className="text-sm text-base"> <span className="font-semibold">Found at</span> : {location}</p>

@@ -72,10 +72,10 @@ const getSingleItem = async(req,res)=>{
 
 //title, description, category, location, status, type, date, images, thumbnail, contact, user
 const createItem = async(req,res)=>{
-    const {title,description,category,location,type,thumbnail,contact} = req.body;
+    const {title,description,category,location,type,thumbnail} = req.body;
 
     const item = await Item.create({
-        title,description,category,location,type,thumbnail,contact,user:req.user.userId
+        title,description,category,location,type,thumbnail,user:req.user.userId
     });
 
     await User.findOneAndUpdate({_id:req.user.userId},{$push:{items:item._id}},{new:true});
@@ -85,12 +85,12 @@ const createItem = async(req,res)=>{
 
 const updateItem = async(req,res)=>{
     const {id} = req.params;
-    const {title,description,category,location,type,thumbnail,contact,status,image,featured} = req.body;
-
+    const {title,description,category,location,contact,status,image,featured} = req.body;
+    // can't update item and thumbnail
     const user = await User.findOne({_id:req.user.userId});
     checkPermissions(req.user,user._id);
 
-    const item = await Item.findOneAndUpdate({_id:id},{title,description,category,location,type,thumbnail,contact,status,featured},{new:true,runValidators:true});
+    const item = await Item.findOneAndUpdate({_id:id},{title,description,category,location,contact,status,featured},{new:true,runValidators:true});
 
     if(!item){
         throw new CustomError.NotFoundError(`Can't update this item`);
@@ -131,7 +131,7 @@ const uploadImages = async(req,res)=>{
         folder : 'Lost-and-Found'
     });
 
-    console.log(result);
+    // console.log(result);
     fs.unlinkSync(req.files.image.tempFilePath);
     res.status(StatusCodes.OK).json({image:result.secure_url});
 }

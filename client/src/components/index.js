@@ -11,3 +11,6 @@ export {default as UserTestimonials} from "./UserTestimonials";
 export {default as Footer} from "./Footer";
 export {default as Filters} from "./Filters";
 export {default as PaginationContainer} from "./PaginationContainer";
+export {default as ProfileItems} from "./ProfileItems";
+export {default as Resolved} from "./Resolved";
+export {default as ProfileGrid} from "./ProfileGrid";

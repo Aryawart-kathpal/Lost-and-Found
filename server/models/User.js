@@ -47,6 +47,22 @@ const userSchema = new mongoose.Schema({
             ref:'Item',
         }],
     },
+    credits:{
+        type:Number,
+        default: 0,
+    },
+    profileImage : {
+        type:String,
+        default:"https://res.cloudinary.com/drnrsxnx9/image/upload/v1721289157/Lost-and-Found/tmp-1-1721289111010_xglzvn.png",
+    },
+    branch:{
+        type:String,
+        enum:{
+            values:['Computer Engineering','Information Technology','Electronics and Telecommunication','Mechanical Engineering','Civil Engineering','Electrical Engineering','Production Engineering'],
+            message:"{VALUE} is not supported",
+        },
+        required:true,
+    }
 },{timestamps:true});
 
 userSchema.pre('save',async function(){

@@ -1,6 +1,6 @@
 import {RouterProvider,createBrowserRouter}  from "react-router-dom";
-import { HomeLayout,Error, Landing, Login, Register,VerifyEmail,ResetPassword,About,Items,Contact, Profile, SingleItem } from "./pages";
-import { ErrorElement } from "./components";
+import { HomeLayout,Error, Landing, Login, Register,VerifyEmail,ResetPassword,About,Items,Contact, Profile, SingleItem} from "./pages";
+import { ErrorElement,ProfileItems,Resolved } from "./components";
 
 //loaders
 import { loader as verifyEmailLoader } from "./pages/VerifyEmail";
@@ -8,11 +8,14 @@ import { loader as resetPasswordLoader } from "./pages/ResetPassword";
 import {loader as landingLoader} from "./pages/Landing";
 import { loader as singleItemLoader } from "./pages/SingleItem";
 import { loader as itemsLoader } from "./pages/Items";
+import {loader as profileLoader} from "./pages/Profile";
+import { loader as resolvedLoader } from "./components/Resolved";
 
 //actions
 import {action as loginAction} from "./pages/Login";
 import {action as registerAction} from "./pages/Register";
 import { action as resetPasswordAction } from "./pages/ResetPassword";
+import { action as profileAction } from "./components/ProfileCard";
 
 import { store } from "./store";
 
@@ -45,16 +48,11 @@ const router = createBrowserRouter([
         errorElement:<ErrorElement/>, 
       },
       {
-        path : '/profile',
-        element : <Profile/>,
-        errorElement:<ErrorElement/>,
-      },
-      {
         path:'/items/:id',
         element:<SingleItem/>,
         loader:singleItemLoader,
         errorElement:<ErrorElement/>
-      }
+      },
     ]
   },
   {
@@ -81,7 +79,28 @@ const router = createBrowserRouter([
     element:<VerifyEmail/>,
     errorElement:<Error/>,
     loader:verifyEmailLoader,
-  }
+  },
+  {
+    path : '/profile',
+    element : <Profile/>,
+    errorElement:<Error/>,
+    loader:profileLoader,
+    children:[
+      {
+        index:true,
+        element:<Resolved/>,
+        errorElement:<ErrorElement/>,
+        loader:resolvedLoader,
+      },
+      {
+        path:'/profile/items',
+        element:<ProfileItems/>,
+        errorElement:<ErrorElement/>,
+        loader:profileLoader,
+        action:profileAction,
+      },
+    ]
+  },
 ]);
 
 function App() {

@@ -65,7 +65,6 @@ const ItemSchema = new mongoose.Schema({
     },
     contact:{
         type:String,
-        required:[true,"Please provide contact details"],
         validate: {
             validator: function(value) {
                 return value.length === 10 && !isNaN(value);
